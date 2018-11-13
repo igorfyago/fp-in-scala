@@ -2,8 +2,8 @@
 package fpinscala
 package applicative
 
+import com.github.plippe.fpinscala.chapter06.State
 import monads.Functor
-import state._
 import StateUtil._ // defined at bottom of this file
 import monoids._
 import language.higherKinds
@@ -58,7 +58,7 @@ object Monad {
     def unit[A](a: => A): State[S, A] = State(s => (a, s))
     override def flatMap[A, B](st: State[S, A])(
         f: A => State[S, B]): State[S, B] =
-      st flatMap f
+      State.flatMap(st)(f)
   }
 
   def composeM[F[_], N[_]](implicit F: Monad[F],
@@ -153,6 +153,10 @@ object Traverse {
 // but aren't in the `exercises` subproject, so we include
 // them here
 object StateUtil {
+  implicit class StateSyntax[S, A](s: State[S, A]) {
+    def map[B](f: A => B): State[S, B] = State.map(s)(f)
+    def flatMap[B](f: A => State[S, B]): State[S, B] = State.flatMap(s)(f)
+  }
 
   def get[S]: State[S, S] =
     State(s => (s, s))
