@@ -44,14 +44,22 @@ object List {
     * function takes constant time. What are different choices you could make in your
     * implementation if the List is Nil? We’ll return to this question in the next chapter
     */
-  def tail[A](l: List[A]): List[A] = ???
+  def tail[A](l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case Cons(_, t) => t
+  }
 
+ println(tail(10)) 
+  
   /** EXERCISE 3.3
     *
     * Using the same idea, implement the function setHead for replacing the first element
     * of a List with a different value.
     */
-  def setHead[A](l: List[A], h: A): List[A] = ???
+  def setHead[A](l: List[A], h: A): List[A] = l match {
+    case Nil => sys.error("empty list")
+    case Cons(_, t) => Cons(h, t)
+  }
 
   /** EXERCISE 3.4
     *
@@ -59,14 +67,17 @@ object List {
     * Note that this function takes time proportional only to the number of elements being
     * dropped—we don’t need to make a copy of the entire List.
     */
-  def drop[A](l: List[A], n: Int): List[A] = ???
+  def drop[A](l: List[A], n: Int): List[A] = l match {
+	case 
+	case 
+  }
 
   /** EXERCISE 3.5
     *
     * Implement dropWhile, which removes elements from the List prefix as long as they
     * match a predicate.
     */
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
+  //def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
 
   /** EXERCISE 3.6
     *
@@ -75,7 +86,7 @@ object List {
     * return List(1,2,3). Why can’t this function be implemented in constant time like
     * tail?
     */
-  def init[A](l: List[A]): List[A] = ???
+  //def init[A](l: List[A]): List[A] = ???
 
   /** EXERCISE 3.7
     *
@@ -94,7 +105,7 @@ object List {
     *
     * Compute the length of a list using foldRight.
     */
-  def length[A](l: List[A]): Int = ???
+  //def length[A](l: List[A]): Int = ???
 
   /** EXERCISE 3.10
     *
@@ -104,22 +115,22 @@ object List {
     * tail-recursive, using the techniques we discussed in the previous chapter. Here is its
     * signature.
     */
-  def foldLeft[A, B](l: List[A], z: B)(f: (B, A) => B): B = ???
+  //def foldLeft[A, B](l: List[A], z: B)(f: (B, A) => B): B = ???
 
   /** EXERCISE 3.11
     *
     * Write sum, product, and a function to compute the length of a list using foldLeft.
     */
-  def sumWithFoldLeft(l: List[Int]): Int = ???
-  def productWithFoldLeft(l: List[Double]): Double = ???
-  def lengthWithFoldLeft[A](l: List[A]): Int = ???
+  //def sumWithFoldLeft(l: List[Int]): Int = ???
+  //def productWithFoldLeft(l: List[Double]): Double = ???
+  //def lengthWithFoldLeft[A](l: List[A]): Int = ???
 
   /** EXERCISE 3.12
     *
     * Write a function that returns the reverse of a list (given List(1,2,3) it returns
     * List(3,2,1)). See if you can write it using a fold.
     */
-  def reverse[A](l: List[A]): List[A] = ???
+  //def reverse[A](l: List[A]): List[A] = ???
 
   /** EXERCISE 3.13
     *
@@ -128,14 +139,14 @@ object List {
     * foldRight tail-recursively, which means it works even for large lists without overflowing
     * the stack.
     */
-  def foldRightWithFoldLeft[A, B](l: List[A], z: B)(f: (A, B) => B): B = ???
-  def foldLeftWithFoldRight[A, B](l: List[A], z: B)(f: (B, A) => B): B = ???
+  //def foldRightWithFoldLeft[A, B](l: List[A], z: B)(f: (A, B) => B): B = ???
+  //def foldLeftWithFoldRight[A, B](l: List[A], z: B)(f: (B, A) => B): B = ???
 
   /** EXERCISE 3.14
     *
     * Implement append in terms of either foldLeft or foldRight.
     */
-  def appendWithFoldRight[A](l: List[A], r: List[A]): List[A] = ???
+  //def appendWithFoldRight[A](l: List[A], r: List[A]): List[A] = ???
 
   /** EXERCISE 3.15
     *
@@ -143,35 +154,35 @@ object List {
     * should be linear in the total length of all lists. Try to use functions we have already
     * defined.
     */
-  def concat[A](l: List[List[A]]): List[A] = ???
+  //def concat[A](l: List[List[A]]): List[A] = ???
 
   /** EXERCISE 3.16
     *
     * Write a function that transforms a list of integers by adding 1 to each element.
     * (Reminder: this should be a pure function that returns a new List!)
     */
-  def mapAdd1(l: List[Int]): List[Int] = ???
+  //def mapAdd1(l: List[Int]): List[Int] = ???
 
   /** EXERCISE 3.17
     *
     * Write a function that turns each value in a List[Double] into a String. You can use
     * the expression d.toString to convert some d: Double to a String.
     */
-  def mapDoubleToString(l: List[Double]): List[String] = ???
+  //def mapDoubleToString(l: List[Double]): List[String] = ???
 
   /** EXERCISE 3.18
     *
     * Write a function map that generalizes modifying each element in a list while maintaining
     * the structure of the list. Here is its signature:
     */
-  def map[A, B](l: List[A])(f: A => B): List[B] = ???
+  //def map[A, B](l: List[A])(f: A => B): List[B] = ???
 
   /** EXERCISE 3.19
     *
     * Write a function filter that removes elements from a list unless they satisfy a given
     * predicate. Use it to remove all odd numbers from a List[Int].
     */
-  def filter[A](l: List[A])(f: A => Boolean): List[A] = ???
+  //def filter[A](l: List[A])(f: A => Boolean): List[A] = ???
 
   /** EXERCISE 3.20
     *
@@ -179,27 +190,27 @@ object List {
     * a list instead of a single result, and that list should be inserted into the final resulting
     * list. For instance, flatMap(List(1,2,3))(i => List(i,i)) should result in List(1,1,2,2,3,3).
     */
-  def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = ???
+  //def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = ???
 
   /** EXERCISE 3.21
     *
     * Use flatMap to implement filter.
     */
-  def filterWithFlatMap[A](l: List[A])(f: A => Boolean): List[A] = ???
+  //def filterWithFlatMap[A](l: List[A])(f: A => Boolean): List[A] = ???
 
   /** EXERCISE 3.22
     *
     * Write a function that accepts two lists and constructs a new list by adding corresponding
     * elements. For example, List(1,2,3) and List(4,5,6) become List(5,7,9).
     */
-  def zipWithAdd(a: List[Int], b: List[Int]): List[Int] = ???
+  //def zipWithAdd(a: List[Int], b: List[Int]): List[Int] = ???
 
   /** EXERCISE 3.23
     *
     * Generalize the function you just wrote so that it’s not specific to integers or addition.
     * Name your generalized function zipWith.
     */
-  def zipWith[A, B, C](a: List[A], b: List[B])(f: (A, B) => C): List[C] = ???
+  //def zipWith[A, B, C](a: List[A], b: List[B])(f: (A, B) => C): List[C] = ???
 
   /** EXERCISE 3.24
     *
@@ -211,6 +222,6 @@ object List {
     * return to this implementation in chapter 5 and hopefully improve on it. Note: Any
     * two values x and y can be compared for equality in Scala using the expression x == y.
     */
-  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = ???
+  //def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = ???
 
 }
